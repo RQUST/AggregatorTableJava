@@ -1,12 +1,9 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class StartApplication {
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            createAndShowGUI();
-        });
+        SwingUtilities.invokeLater(StartApplication::createAndShowGUI);
     }
 
     private static void createAndShowGUI() {
@@ -25,13 +22,10 @@ public class StartApplication {
 
         // Создаем пункт "Старт" в меню "Файл"
         JMenuItem startMenuItem = new JMenuItem("Старт");
-        startMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        startMenuItem.addActionListener((ActionEvent e) ->
                 // Действие при выборе "Старт"
-                JOptionPane.showMessageDialog(frame, "Вы выбрали 'Старт'");
-            }
-        });
+                JOptionPane.showMessageDialog(frame, "Вы выбрали 'Старт'")
+        );
 
         // Добавляем пункт "Старт" в меню "Файл"
         fileMenu.add(startMenuItem);

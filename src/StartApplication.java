@@ -1,5 +1,5 @@
+import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
 
 public class StartApplication {
     public static void main(String[] args) {
@@ -7,36 +7,24 @@ public class StartApplication {
     }
 
     private static void createAndShowGUI() {
-        // Создаем фрейм
         JFrame frame = new JFrame("Мое приложение");
-
-        // Устанавливаем операцию закрытия фрейма
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Создаем панель меню
-        JMenuBar menuBar = new JMenuBar();
-        frame.setJMenuBar(menuBar);
+        JPanel panel = new JPanel(new MigLayout());
+        panel.add(new JButton("Старт"), "wrap"); // "wrap" переводит на новую строку
+        JLabel messageLabel = new JLabel();
 
-        // Создаем меню "Файл"
-        JMenu fileMenu = new JMenu("Файл");
+        JButton startButton = new JButton("Старт");
+        startButton.addActionListener(e -> {
+            // Действие при выборе "Старт"
+            messageLabel.setText("Вы выбрали 'Старт'");
+        });
+        panel.add(startButton, "wrap");
 
-        // Создаем пункт "Старт" в меню "Файл"
-        JMenuItem startMenuItem = new JMenuItem("Старт");
-        startMenuItem.addActionListener((ActionEvent e) ->
-                // Действие при выборе "Старт"
-                JOptionPane.showMessageDialog(frame, "Вы выбрали 'Старт'")
-        );
+        panel.add(messageLabel, "span, grow");
 
-        // Добавляем пункт "Старт" в меню "Файл"
-        fileMenu.add(startMenuItem);
-
-        // Добавляем меню "Файл" в панель меню
-        menuBar.add(fileMenu);
-
-        // Устанавливаем размеры фрейма
+        frame.getContentPane().add(panel);
         frame.setSize(400, 300);
-
-        // Делаем фрейм видимым
         frame.setVisible(true);
     }
 }

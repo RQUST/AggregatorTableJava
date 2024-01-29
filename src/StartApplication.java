@@ -17,7 +17,9 @@ public class StartApplication {
         JButton startButton = new JButton("Старт");
         startButton.addActionListener(e -> {
             // Действие при выборе "Старт"
-            messageLabel.setText("Вы выбрали 'Старт'");
+            panel.removeAll();
+            MyFrame myFrame = new MyFrame();
+            panel.add(myFrame);
         });
         panel.add(startButton, "wrap");
 

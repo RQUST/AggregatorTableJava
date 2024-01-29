@@ -17,7 +17,6 @@ public class StartApplication {
         JButton startButton = new JButton("Старт");
         startButton.addActionListener(e -> {
             // Действие при выборе "Старт"
-            panel.removeAll();
             MyFrame myFrame = new MyFrame();
             panel.add(myFrame);
         });

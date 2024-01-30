@@ -6,7 +6,6 @@ public class MyFrame extends JFrame {
     public MyFrame() {
         setLayout(new MigLayout());
 
-        // Создаем панель и устанавливаем для нее MigLayout
         JPanel panel = new JPanel(new MigLayout());
 
         JLabel rowLabel = new JLabel("Строк:");
@@ -15,11 +14,37 @@ public class MyFrame extends JFrame {
         JLabel colLabel = new JLabel("Столбцов:");
         JSpinner colSpinner = new JSpinner();
 
-        JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовка");
-        addRowHeaderCheckbox.setSelected(true); // Установка в выбранное состояние по умолчанию
+        JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку итогов:");
+        addRowHeaderCheckbox.setSelected(true);
 
-        JCheckBox addColHeaderCheckbox = new JCheckBox("Добавить столбец заголовков");
-        addColHeaderCheckbox.setSelected(true); // Установка в выбранное состояние по умолчанию
+        JCheckBox addColHeaderCheckbox = new JCheckBox("Добавить столбец итогов:");
+        addColHeaderCheckbox.setSelected(true);
+
+        JCheckBox addSummaryRowCheckbox = new JCheckBox("Добавить строку итогов:");
+        JCheckBox addSummaryColumnCheckbox = new JCheckBox("Добавить столбец итогов:");
+
+        JComboBox<String> summaryOptionsComboBoxRow = new JComboBox<>(new String[]{
+                "Сумма",
+                "Количество",
+                "Среднее",
+                "Максимум",
+                "Минимум",
+                "Сумма квадратов",
+                "Формула"
+        });
+
+        JComboBox<String> summaryOptionsComboBoxColumn = new JComboBox<>(new String[]{
+                "Сумма",
+                "Количество",
+                "Среднее",
+                "Максимум",
+                "Минимум",
+                "Сумма квадратов",
+                "Формула"
+        });
+
+        JTextField formulaTextFieldRow = new JTextField();
+        JTextField formulaTextFieldColumn = new JTextField();
 
         JButton closeButton = new JButton("Закрыть");
         closeButton.addActionListener(e -> dispose());
@@ -31,6 +56,13 @@ public class MyFrame extends JFrame {
         panel.add(colSpinner, "width 300!, wrap");
         panel.add(addRowHeaderCheckbox, "span 2");
         panel.add(addColHeaderCheckbox, "span 2, wrap");
+        panel.add(addSummaryRowCheckbox, "span 2");
+        panel.add(summaryOptionsComboBoxRow);
+        panel.add(formulaTextFieldRow, "width 300!, wrap");
+        panel.add(addSummaryColumnCheckbox, "span 2");
+        panel.add(summaryOptionsComboBoxColumn);
+        panel.add(formulaTextFieldColumn, "width 300!, wrap");
+
         panel.add(closeButton, "span 2, align center");
 
         // Добавляем панель на JFrame

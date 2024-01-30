@@ -16,7 +16,10 @@ public class MyFrame extends JFrame {
         JSpinner colSpinner = new JSpinner();
 
         JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовка");
+        addRowHeaderCheckbox.setSelected(true); // Установка в выбранное состояние по умолчанию
+
         JCheckBox addColHeaderCheckbox = new JCheckBox("Добавить столбец заголовков");
+        addColHeaderCheckbox.setSelected(true); // Установка в выбранное состояние по умолчанию
 
         JButton closeButton = new JButton("Закрыть");
         closeButton.addActionListener(e -> dispose());
@@ -26,7 +29,7 @@ public class MyFrame extends JFrame {
         panel.add(rowSpinner, "width 300!");
         panel.add(colLabel, "align trailing");
         panel.add(colSpinner, "width 300!, wrap");
-        panel.add(addRowHeaderCheckbox, "span 2, wrap");
+        panel.add(addRowHeaderCheckbox, "span 2");
         panel.add(addColHeaderCheckbox, "span 2, wrap");
         panel.add(closeButton, "span 2, align center");
 

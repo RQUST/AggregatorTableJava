@@ -31,8 +31,7 @@ public class StartApplication {
         JMenu fileMenu = new JMenu("Файл");
         JMenuItem startMenuItem = new JMenuItem("Старт");
 
-        startMenuItem.addActionListener(e -> {
-            // Действие при выборе "Старт" из меню
+        startMenuItem.addActionListener(e -> { 
             MyFrame myFrame = new MyFrame();
         });
 

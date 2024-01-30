@@ -1,6 +1,10 @@
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MyFrame extends JFrame {
     public MyFrame() {
@@ -46,6 +50,9 @@ public class MyFrame extends JFrame {
         JTextField formulaTextFieldRow = new JTextField();
         JTextField formulaTextFieldColumn = new JTextField();
 
+        JCheckBox roundResultCheckbox = new JCheckBox("Округлить результат:");
+        JSpinner precisionSpinner = new JSpinner(new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1));
+
         JButton closeButton = new JButton("Закрыть");
         closeButton.addActionListener(e -> dispose());
 
@@ -62,6 +69,9 @@ public class MyFrame extends JFrame {
         panel.add(addSummaryColumnCheckbox, "span 2");
         panel.add(summaryOptionsComboBoxColumn);
         panel.add(formulaTextFieldColumn, "width 300!, wrap");
+        panel.add(roundResultCheckbox, "span 2");
+        panel.add(new JLabel("Количество знаков после запятой:"), "align trailing");
+        panel.add(precisionSpinner, "width 50!, wrap");
 
         panel.add(closeButton, "span 2, align center");
 

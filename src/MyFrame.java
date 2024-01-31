@@ -87,8 +87,6 @@ public class MyFrame extends JFrame {
 
         bottomPanel.add(closeButton, "align center, span 4");
 
-
-
         panel.add(topPanel, "grow");
         panel.add(midPanel, "grow");
         panel.add(bottomPanel, "grow");

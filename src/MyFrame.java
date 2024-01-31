@@ -50,7 +50,7 @@ public class MyFrame extends JFrame {
         JTextField formulaTextFieldRow = new JTextField();
         JTextField formulaTextFieldColumn = new JTextField();
 
-        JCheckBox roundResultCheckbox = new JCheckBox("Округлить результат:");
+        JCheckBox roundResultCheckbox = new JCheckBox("Округлить результат с точностью до:");
         JSpinner precisionSpinner = new JSpinner(new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1));
 
         JButton closeButton = new JButton("Закрыть");
@@ -70,10 +70,11 @@ public class MyFrame extends JFrame {
         panel.add(summaryOptionsComboBoxColumn);
         panel.add(formulaTextFieldColumn, "width 300!, wrap");
         panel.add(roundResultCheckbox, "span 2");
-        panel.add(new JLabel("Количество знаков после запятой:"), "align trailing");
-        panel.add(precisionSpinner, "width 50!, wrap");
+        panel.add(precisionSpinner, "width 150!, align trailing");
+        panel.add(new JLabel("знаков после запятой"), "wrap");
 
-        panel.add(closeButton, "align center");
+
+        panel.add(closeButton, "  center");
 
         // Добавляем панель на JFrame
         add(panel, "wrap, grow");

@@ -96,7 +96,7 @@ public class MyFrame extends JFrame {
         // Добавляем панель на JFrame
         add(panel, "wrap, grow");
 
-        setSize(950, 500);
+        setSize(550, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

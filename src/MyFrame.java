@@ -10,7 +10,8 @@ public class MyFrame extends JFrame {
     public MyFrame() {
         setLayout(new MigLayout());
 
-        JPanel panel = new JPanel(new MigLayout());
+//        JPanel panel = new JPanel(new MigLayout());
+        JPanel panel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
 
         JLabel rowLabel = new JLabel("Строк:");
         JSpinner rowSpinner = new JSpinner();
@@ -50,31 +51,47 @@ public class MyFrame extends JFrame {
         JTextField formulaTextFieldRow = new JTextField();
         JTextField formulaTextFieldColumn = new JTextField();
 
-        JCheckBox roundResultCheckbox = new JCheckBox("Округлить результат с точностью до:");
+        JCheckBox roundResultCheckbox = new JCheckBox("Округлить результат с точностью до");
         JSpinner precisionSpinner = new JSpinner(new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1));
 
         JButton closeButton = new JButton("Закрыть");
         closeButton.addActionListener(e -> dispose());
 
         // Добавляем компоненты на панель с использованием MigLayout-констрейнтов
-        panel.add(rowLabel, "align trailing");
-        panel.add(rowSpinner, "width 300!");
-        panel.add(colLabel, "align trailing");
-        panel.add(colSpinner, "width 300!, wrap");
-        panel.add(addRowHeaderCheckbox, "span 2");
-        panel.add(addColHeaderCheckbox, "span 2, wrap");
-        panel.add(addSummaryRowCheckbox, "span 2");
-        panel.add(summaryOptionsComboBoxRow);
-        panel.add(formulaTextFieldRow, "width 300!, wrap");
-        panel.add(addSummaryColumnCheckbox, "span 2");
-        panel.add(summaryOptionsComboBoxColumn);
-        panel.add(formulaTextFieldColumn, "width 300!, wrap");
-        panel.add(roundResultCheckbox, "span 2");
-        panel.add(precisionSpinner, "width 150!, align trailing");
-        panel.add(new JLabel("знаков после запятой"), "wrap");
+
+        JPanel topPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 4, fill", "[][][][]"));
+
+        topPanel.add(rowLabel);
+        topPanel.add(rowSpinner, "width 200!");
+        topPanel.add(colLabel);
+        topPanel.add(colSpinner, "width 200!");
+
+        topPanel.add(addRowHeaderCheckbox, "span 2");
+        topPanel.add(addColHeaderCheckbox, "span 2");
+
+        JPanel midPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 3, fill", "[pref!][][200!]"));
+
+        midPanel.add(addSummaryRowCheckbox);
+        midPanel.add(summaryOptionsComboBoxRow);
+        midPanel.add(formulaTextFieldRow, "grow");
+
+        midPanel.add(addSummaryColumnCheckbox);
+        midPanel.add(summaryOptionsComboBoxColumn);
+        midPanel.add(formulaTextFieldColumn, "grow");
+
+        JPanel bottomPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 3, fill", "[][][]"));
+
+        bottomPanel.add(roundResultCheckbox);
+        bottomPanel.add(precisionSpinner, "width 50!");
+        bottomPanel.add(new JLabel(" знаков после запятой"));
+
+        bottomPanel.add(closeButton, "align center, span 4");
 
 
-        panel.add(closeButton, "  center");
+
+        panel.add(topPanel, "grow");
+        panel.add(midPanel, "grow");
+        panel.add(bottomPanel, "grow");
 
         // Добавляем панель на JFrame
         add(panel, "wrap, grow");

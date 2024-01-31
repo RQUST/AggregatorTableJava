@@ -18,10 +18,10 @@ public class MyFrame extends JFrame {
         JLabel colLabel = new JLabel("Столбцов:");
         JSpinner colSpinner = new JSpinner();
 
-        JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку итогов:");
+        JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовков:");
         addRowHeaderCheckbox.setSelected(true);
 
-        JCheckBox addColHeaderCheckbox = new JCheckBox("Добавить столбец итогов:");
+        JCheckBox addColHeaderCheckbox = new JCheckBox("Добавить столбец заголовков:");
         addColHeaderCheckbox.setSelected(true);
 
         JCheckBox addSummaryRowCheckbox = new JCheckBox("Добавить строку итогов:");

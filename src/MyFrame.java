@@ -73,12 +73,12 @@ public class MyFrame extends JFrame {
         panel.add(new JLabel("Количество знаков после запятой:"), "align trailing");
         panel.add(precisionSpinner, "width 50!, wrap");
 
-        panel.add(closeButton, "span 2, align center");
+        panel.add(closeButton, "align center");
 
         // Добавляем панель на JFrame
         add(panel, "wrap, grow");
 
-        setSize(1000, 500);
+        setSize(950, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

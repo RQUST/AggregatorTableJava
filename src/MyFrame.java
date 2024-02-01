@@ -1,20 +1,31 @@
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MyFrame extends JFrame {
+    private JPanel panel;
+    private JTable table;
+    private JSpinner rowSpinner;
+    private JSpinner colSpinner;
+    private JCheckBox addSummaryRowCheckbox;
+    private JComboBox<String> summaryOptionsComboBoxRow;
+    private JCheckBox addSummaryColumnCheckbox;
+    private JComboBox<String> summaryOptionsComboBoxColumn;
+
     public MyFrame() {
         setLayout(new MigLayout());
 
-        JPanel panel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
+        panel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
 
         JLabel rowLabel = new JLabel("Строк:");
-        JSpinner rowSpinner = new JSpinner();
+        rowSpinner = new JSpinner();
 
         JLabel colLabel = new JLabel("Столбцов:");
-        JSpinner colSpinner = new JSpinner();
+        colSpinner = new JSpinner();
 
         JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовков");
         addRowHeaderCheckbox.setSelected(true);
@@ -22,10 +33,8 @@ public class MyFrame extends JFrame {
         JCheckBox addColHeaderCheckbox = new JCheckBox("Добавить столбец заголовков");
         addColHeaderCheckbox.setSelected(true);
 
-        JCheckBox addSummaryRowCheckbox = new JCheckBox("Добавить строку итогов:");
-        JCheckBox addSummaryColumnCheckbox = new JCheckBox("Добавить столбец итогов:");
-
-        JComboBox<String> summaryOptionsComboBoxRow = new JComboBox<>(new String[]{
+        addSummaryRowCheckbox = new JCheckBox("Добавить строку итогов:");
+        summaryOptionsComboBoxRow = new JComboBox<>(new String[]{
                 "Сумма",
                 "Количество",
                 "Среднее",
@@ -35,7 +44,8 @@ public class MyFrame extends JFrame {
                 "Формула"
         });
 
-        JComboBox<String> summaryOptionsComboBoxColumn = new JComboBox<>(new String[]{
+        addSummaryColumnCheckbox = new JCheckBox("Добавить столбец итогов:");
+        summaryOptionsComboBoxColumn = new JComboBox<>(new String[]{
                 "Сумма",
                 "Количество",
                 "Среднее",
@@ -44,12 +54,6 @@ public class MyFrame extends JFrame {
                 "Сумма квадратов",
                 "Формула"
         });
-
-        JTextField formulaTextFieldRow = new JTextField();
-        JTextField formulaTextFieldColumn = new JTextField();
-
-        JCheckBox roundResultCheckbox = new JCheckBox("Округлить результат с точностью до");
-        JSpinner precisionSpinner = new JSpinner(new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1));
 
         JButton insertButton = new JButton("Вставить");
         JButton cancelButton = new JButton("Отмена");
@@ -57,15 +61,14 @@ public class MyFrame extends JFrame {
         insertButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Добавьте здесь код для обработки вставки
-                // Например, вызовите метод, который будет выполнять вставку
+                insertTable();
             }
         });
 
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Закрытие диалогового окна при нажатии на "Отмена"
+                dispose();
             }
         });
 
@@ -80,18 +83,17 @@ public class MyFrame extends JFrame {
         JPanel midPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 3, fill", "[pref!][][200!]"));
         midPanel.add(addSummaryRowCheckbox);
         midPanel.add(summaryOptionsComboBoxRow);
-        midPanel.add(formulaTextFieldRow, "grow");
+        midPanel.add(new JTextField(), "grow");
         midPanel.add(addSummaryColumnCheckbox);
         midPanel.add(summaryOptionsComboBoxColumn);
-        midPanel.add(formulaTextFieldColumn, "grow");
+        midPanel.add(new JTextField(), "grow");
 
         JPanel bottomPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 3, fill", "[][][]"));
-        bottomPanel.add(roundResultCheckbox);
-        bottomPanel.add(precisionSpinner, "width 50!");
+        bottomPanel.add(new JCheckBox("Округлить результат с точностью до"));
+        bottomPanel.add(new JSpinner(new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1)), "width 50!");
         bottomPanel.add(new JLabel(" знаков после запятой"));
 
         JPanel buttonPanel = new JPanel(new MigLayout("insets 5 5 5 5, wrap 2", "[][]"));
-
         buttonPanel.add(insertButton);
         buttonPanel.add(cancelButton);
 
@@ -106,5 +108,58 @@ public class MyFrame extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    private void insertTable() {
+        int numRows = (int) rowSpinner.getValue();
+        int numCols = (int) colSpinner.getValue();
+        String[] columnHeaders = new String[numCols];
+
+        for (int i = 0; i < numCols; i++) {
+            columnHeaders[i] = String.valueOf(i + 1);
+        }
+
+        DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, numRows);
+
+        for (int i = 0; i < numRows; i++) {
+            tableModel.setValueAt(String.valueOf(i + 1), i, 0);
+        }
+
+        table = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(table);
+        panel.add(scrollPane, "grow, span 4");
+
+        setSummaryCells(numRows, numCols);
+
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    private void setSummaryCells(int numRows, int numCols) {
+        if (addSummaryRowCheckbox.isSelected()) {
+            int summaryRow = numRows;
+
+            String selectedAggregator = summaryOptionsComboBoxRow.getSelectedItem().toString();
+
+            table.setValueAt(selectedAggregator, summaryRow, 0);
+
+            for (int i = 1; i < numCols; i++) {
+                table.setValueAt("", summaryRow, i);
+                table.getColumnModel().getColumn(i).setCellEditor(null);
+            }
+        }
+
+        if (addSummaryColumnCheckbox.isSelected()) {
+            int summaryCol = numCols;
+
+            String selectedAggregator = summaryOptionsComboBoxColumn.getSelectedItem().toString();
+
+            table.setValueAt(selectedAggregator, 0, summaryCol);
+
+            for (int i = 1; i < numRows; i++) {
+                table.setValueAt("", i, summaryCol);
+                table.getRowSorter().toggleSortOrder(summaryCol);
+            }
+        }
     }
 }

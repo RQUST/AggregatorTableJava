@@ -80,26 +80,26 @@ public class MyFrame extends JFrame {
         topPanel.add(addRowHeaderCheckbox, "span 2");
         topPanel.add(addColHeaderCheckbox, "span 2");
 
-        JPanel midPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 3, fill", "[pref!][][200!]"));
-        midPanel.add(addSummaryRowCheckbox);
-        midPanel.add(summaryOptionsComboBoxRow);
-        midPanel.add(new JTextField(), "grow");
-        midPanel.add(addSummaryColumnCheckbox);
-        midPanel.add(summaryOptionsComboBoxColumn);
-        midPanel.add(new JTextField(), "grow");
+        JPanel firstPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 3, fill", "[pref!][][200!]"));
+        firstPanel.add(addSummaryRowCheckbox);
+        firstPanel.add(summaryOptionsComboBoxRow);
+        firstPanel.add(new JTextField(), "grow");
+        firstPanel.add(addSummaryColumnCheckbox);
+        firstPanel.add(summaryOptionsComboBoxColumn);
+        firstPanel.add(new JTextField(), "grow");
 
-        JPanel bottomPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 3, fill", "[][][]"));
-        bottomPanel.add(new JCheckBox("Округлить результат с точностью до"));
-        bottomPanel.add(new JSpinner(new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1)), "width 50!");
-        bottomPanel.add(new JLabel(" знаков после запятой"));
+        JPanel secondPanel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 3, fill", "[][][]"));
+        secondPanel.add(new JCheckBox("Округлить результат с точностью до"));
+        secondPanel.add(new JSpinner(new SpinnerNumberModel(2, 0, Integer.MAX_VALUE, 1)), "width 50!");
+        secondPanel.add(new JLabel(" знаков после запятой"));
 
         JPanel buttonPanel = new JPanel(new MigLayout("insets 5 5 5 5, wrap 2", "[][]"));
         buttonPanel.add(insertButton);
         buttonPanel.add(cancelButton);
 
         panel.add(topPanel, "grow");
-        panel.add(midPanel, "grow");
-        panel.add(bottomPanel, "grow");
+        panel.add(firstPanel, "grow");
+        panel.add(secondPanel, "grow");
         panel.add(buttonPanel, "align center, span 4");
 
         add(panel, "wrap, grow");

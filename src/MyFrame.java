@@ -90,7 +90,7 @@ public class MyFrame extends JFrame {
         bottomPanel.add(precisionSpinner, "width 50!");
         bottomPanel.add(new JLabel(" знаков после запятой"));
 
-        JPanel buttonPanel = new JPanel(new MigLayout("insets 5 5 5 5, wrap 2"));
+        JPanel buttonPanel = new JPanel(new MigLayout("insets 5 5 5 5, wrap 2", "[][]"));
 
         buttonPanel.add(insertButton);
         buttonPanel.add(cancelButton);

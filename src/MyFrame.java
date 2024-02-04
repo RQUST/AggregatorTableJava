@@ -15,9 +15,11 @@ public class MyFrame extends JFrame {
     private JComboBox<String> summaryOptionsComboBoxRow;
     private JCheckBox addSummaryColumnCheckbox;
     private JComboBox<String> summaryOptionsComboBoxColumn;
+    private JPanel table_panel_;
 
-    public MyFrame() {
+    public MyFrame(JPanel table_panel) {
         setLayout(new MigLayout());
+        table_panel_ = table_panel;
 
         panel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
 
@@ -127,13 +129,14 @@ public class MyFrame extends JFrame {
 
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
-        panel.add(scrollPane, "grow, span 4");
+        table_panel_.add(scrollPane, "grow, span 4");  // Add the table to table_panel_
 
         setSummaryCells(numRows, numCols);
 
-        panel.revalidate();
-        panel.repaint();
+        table_panel_.revalidate();  // Revalidate table_panel_ instead of the local panel
+        table_panel_.repaint();
     }
+
 
     private void setSummaryCells(int numRows, int numCols) {
         if (addSummaryRowCheckbox.isSelected()) {

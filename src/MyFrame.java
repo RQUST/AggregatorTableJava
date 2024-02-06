@@ -11,6 +11,8 @@ public class MyFrame extends JFrame {
     private JTable table;
     private JSpinner rowSpinner;
     private JSpinner colSpinner;
+    private JCheckBox addRowHeaderCheckbox;
+    private JCheckBox addColHeaderCheckbox;
     private JCheckBox addSummaryRowCheckbox;
     private JComboBox<String> summaryOptionsComboBoxRow;
     private JCheckBox addSummaryColumnCheckbox;
@@ -29,10 +31,10 @@ public class MyFrame extends JFrame {
         JLabel colLabel = new JLabel("Столбцов:");
         colSpinner = new JSpinner();
 
-        JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовков");
+        addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовков");
         addRowHeaderCheckbox.setSelected(true);
 
-        JCheckBox addColHeaderCheckbox = new JCheckBox("Добавить столбец заголовков");
+        addColHeaderCheckbox = new JCheckBox("Добавить столбец заголовков");
         addColHeaderCheckbox.setSelected(true);
 
         addSummaryRowCheckbox = new JCheckBox("Добавить строку итогов:");
@@ -111,26 +113,38 @@ public class MyFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
+
     private void insertTable() {
         int numRows = (int) rowSpinner.getValue();
         int numCols = (int) colSpinner.getValue();
-        String[] columnHeaders = new String[numCols];
 
-        for (int i = 0; i < numCols; i++) {
-            columnHeaders[i] = String.valueOf(i + 1);
-        }
-
-        DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, numRows) {
+        DefaultTableModel tableModel = new DefaultTableModel(numRows, numCols) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Редактируемая только первая строка
-                return row == 0 || column != 0;
+                boolean rowHeaderSelected = addRowHeaderCheckbox.isSelected();
+                boolean colHeaderSelected = addColHeaderCheckbox.isSelected();
+
+                if (row == 0) {
+                    if (rowHeaderSelected && column == 0) {
+                        return true;
+                    }
+                     return !rowHeaderSelected;
+                }
+                 if (column == 0) {
+                     if (colHeaderSelected && row == 0) {
+                        return true;
+                    }
+                     return !colHeaderSelected;
+                }
+                 return true;
+            }
+
+            @Override
+            public String getColumnName(int column) {
+                // Возвращаем пустую строку для заголовков столбцов
+                return "";
             }
         };
-
-        for (int i = 0; i < numRows; i++) {
-            tableModel.setValueAt(String.valueOf(i + 1), i, 0);
-        }
 
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
@@ -148,29 +162,23 @@ public class MyFrame extends JFrame {
 
 
     private void setSummaryCells(int numRows, int numCols) {
-        if (addSummaryRowCheckbox.isSelected()) {
-            int summaryRow = numRows;
-
-            String selectedAggregator = summaryOptionsComboBoxRow.getSelectedItem().toString();
-
-            table.setValueAt(selectedAggregator, summaryRow, 0);
-
-            for (int i = 1; i < numCols; i++) {
-                table.setValueAt("", summaryRow, i);
-                table.getColumnModel().getColumn(i).setCellEditor(null);
+        if (addRowHeaderCheckbox.isSelected()) {
+            for (int i = 0; i < numRows; i++) {
+                table.setValueAt(String.valueOf(i + 1), i, 0);
+            }
+        } else {
+            for (int i = 0; i < numRows; i++) {
+                table.setValueAt("", i, 0);
             }
         }
 
-        if (addSummaryColumnCheckbox.isSelected()) {
-            int summaryCol = numCols;
-
-            String selectedAggregator = summaryOptionsComboBoxColumn.getSelectedItem().toString();
-
-            table.setValueAt(selectedAggregator, 0, summaryCol);
-
-            for (int i = 1; i < numRows; i++) {
-                table.setValueAt("", i, summaryCol);
-                table.getRowSorter().toggleSortOrder(summaryCol);
+        if (addColHeaderCheckbox.isSelected()) {
+            for (int i = 0; i < numCols; i++) {
+                table.setValueAt(String.valueOf(i + 1), 0, i);
+            }
+        } else {
+            for (int i = 0; i < numCols; i++) {
+                table.setValueAt("", 0, i);
             }
         }
     }

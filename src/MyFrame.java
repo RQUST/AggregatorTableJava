@@ -111,7 +111,6 @@ public class MyFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
     }
-
     private void insertTable() {
         int numRows = (int) rowSpinner.getValue();
         int numCols = (int) colSpinner.getValue();
@@ -135,8 +134,9 @@ public class MyFrame extends JFrame {
 
         table_panel_.revalidate();  // Revalidate table_panel_ instead of the local panel
         table_panel_.repaint();
-    }
 
+        dispose();
+    }
 
     private void setSummaryCells(int numRows, int numCols) {
         if (addSummaryRowCheckbox.isSelected()) {

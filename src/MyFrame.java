@@ -120,7 +120,13 @@ public class MyFrame extends JFrame {
             columnHeaders[i] = String.valueOf(i + 1);
         }
 
-        DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, numRows);
+        DefaultTableModel tableModel = new DefaultTableModel(columnHeaders, numRows) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                // Редактируемая только первая строка
+                return row == 0 || column != 0;
+            }
+        };
 
         for (int i = 0; i < numRows; i++) {
             tableModel.setValueAt(String.valueOf(i + 1), i, 0);
@@ -135,8 +141,11 @@ public class MyFrame extends JFrame {
         table_panel_.revalidate();  // Revalidate table_panel_ instead of the local panel
         table_panel_.repaint();
 
+        // Закрываем окно MyFrame после добавления таблицы
         dispose();
     }
+
+
 
     private void setSummaryCells(int numRows, int numCols) {
         if (addSummaryRowCheckbox.isSelected()) {

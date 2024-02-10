@@ -17,11 +17,11 @@ public class MyFrame extends JFrame {
     private JComboBox<String> summaryOptionsComboBoxRow;
     private JCheckBox addSummaryColumnCheckbox;
     private JComboBox<String> summaryOptionsComboBoxColumn;
-    private JPanel table_panel_;
+    private JPanel table_panel;
 
     public MyFrame(JPanel table_panel) {
         setLayout(new MigLayout());
-        table_panel_ = table_panel;
+        this.table_panel = table_panel;
 
         panel = new JPanel(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
 
@@ -128,15 +128,15 @@ public class MyFrame extends JFrame {
                     if (rowHeaderSelected && column == 0) {
                         return true;
                     }
-                     return !rowHeaderSelected;
+                    return !rowHeaderSelected;
                 }
-                 if (column == 0) {
-                     if (colHeaderSelected && row == 0) {
+                if (column == 0) {
+                    if (colHeaderSelected && row == 0) {
                         return true;
                     }
-                     return !colHeaderSelected;
+                    return !colHeaderSelected;
                 }
-                 return true;
+                return true;
             }
 
             @Override
@@ -148,18 +148,15 @@ public class MyFrame extends JFrame {
 
         table = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(table);
-        table_panel_.add(scrollPane, "grow, span 4");  // Add the table to table_panel_
-
+        table_panel.removeAll(); // Clear previous content
+        table_panel.add(scrollPane, "grow, span 4");  // Add the table to table_panel
         setSummaryCells(numRows, numCols);
-
-        table_panel_.revalidate();  // Revalidate table_panel_ instead of the local panel
-        table_panel_.repaint();
+        table_panel.revalidate();  // Revalidate table_panel instead of the local panel
+        table_panel.repaint();
 
         // Закрываем окно MyFrame после добавления таблицы
         dispose();
     }
-
-
 
     private void setSummaryCells(int numRows, int numCols) {
         if (addRowHeaderCheckbox.isSelected()) {

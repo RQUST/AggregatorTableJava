@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MyFrame extends JFrame {
+public class MyFrame extends JFrame { // Change from JPanel to JFrame
     private JPanel panel;
     private JTable table;
     private JSpinner rowSpinner;
@@ -72,7 +72,7 @@ public class MyFrame extends JFrame {
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose();
+                dispose(); // Dispose the frame
             }
         });
 

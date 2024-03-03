@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MyFrame extends JFrame { // Change from JPanel to JFrame
+public class MyFrame extends JFrame {
     private JPanel panel;
     private JTable table;
     private JSpinner rowSpinner;
@@ -72,7 +72,7 @@ public class MyFrame extends JFrame { // Change from JPanel to JFrame
         cancelButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Dispose the frame
+                dispose();
             }
         });
 
@@ -118,6 +118,14 @@ public class MyFrame extends JFrame { // Change from JPanel to JFrame
         int numRows = (int) rowSpinner.getValue();
         int numCols = (int) colSpinner.getValue();
 
+        // Увеличиваем количество строк и столбцов на 1, если соответствующие чекбоксы выбраны
+        if (addRowHeaderCheckbox.isSelected()) {
+            numRows++;
+        }
+        if (addColHeaderCheckbox.isSelected()) {
+            numCols++;
+        }
+
         DefaultTableModel tableModel = new DefaultTableModel(numRows, numCols) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -159,23 +167,17 @@ public class MyFrame extends JFrame { // Change from JPanel to JFrame
     }
 
     private void setSummaryCells(int numRows, int numCols) {
+        // Пропускаем первую строку (заголовки строк), если выбран чекбокс
         if (addRowHeaderCheckbox.isSelected()) {
-            for (int i = 0; i < numRows; i++) {
-                table.setValueAt(String.valueOf(i + 1), i, 0);
-            }
-        } else {
-            for (int i = 0; i < numRows; i++) {
-                table.setValueAt("", i, 0);
+            for (int i = 1; i < numRows; i++) {
+                table.setValueAt(String.valueOf(i), i, 0);
             }
         }
 
+        // Пропускаем первый столбец (заголовки столбцов), если выбран чекбокс
         if (addColHeaderCheckbox.isSelected()) {
-            for (int i = 0; i < numCols; i++) {
-                table.setValueAt(String.valueOf(i + 1), 0, i);
-            }
-        } else {
-            for (int i = 0; i < numCols; i++) {
-                table.setValueAt("", 0, i);
+            for (int i = 1; i < numCols; i++) {
+                table.setValueAt(String.valueOf(i), 0, i);
             }
         }
     }

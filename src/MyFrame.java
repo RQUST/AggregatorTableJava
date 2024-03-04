@@ -132,6 +132,11 @@ public class MyFrame extends JFrame {
                 boolean rowHeaderSelected = addRowHeaderCheckbox.isSelected();
                 boolean colHeaderSelected = addColHeaderCheckbox.isSelected();
 
+                // Клетка (0, 0) неизменяема только если оба чекбокса выбраны
+                if (row == 0 && column == 0 && rowHeaderSelected && colHeaderSelected) {
+                    return false;
+                }
+
                 if (row == 0) {
                     if (rowHeaderSelected && column == 0) {
                         return true;

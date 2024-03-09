@@ -151,15 +151,10 @@ public class MyFrame extends JFrame {
                 }
                 return true;
             }
-
-            @Override
-            public String getColumnName(int column) {
-                // Возвращаем пустую строку для заголовков столбцов
-                return "";
-            }
         };
 
         table = new JTable(tableModel);
+        table.setTableHeader(null);
         JScrollPane scrollPane = new JScrollPane(table);
         table_panel.removeAll(); // Clear previous content
         table_panel.add(scrollPane, "grow, span 4");  // Add the table to table_panel
@@ -172,18 +167,19 @@ public class MyFrame extends JFrame {
     }
 
     private void setSummaryCells(int numRows, int numCols) {
-        // Пропускаем первую строку (заголовки строк), если выбран чекбокс
+        // Пропускаем первую строку (заголовки столбцов), если выбран чекбокс
         if (addRowHeaderCheckbox.isSelected()) {
-            for (int i = 1; i < numRows; i++) {
-                table.setValueAt(String.valueOf(i), i, 0);
-            }
-        }
-
-        // Пропускаем первый столбец (заголовки столбцов), если выбран чекбокс
-        if (addColHeaderCheckbox.isSelected()) {
             for (int i = 1; i < numCols; i++) {
                 table.setValueAt(String.valueOf(i), 0, i);
             }
         }
+
+        // Пропускаем первый столбец (заголовки строк), если выбран чекбокс
+        if (addColHeaderCheckbox.isSelected()) {
+            for (int i = 1; i < numRows; i++) {
+                table.setValueAt(String.valueOf(i), i, 0);
+            }
+        }
     }
+
 }

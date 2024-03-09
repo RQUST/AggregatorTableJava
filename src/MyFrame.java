@@ -132,23 +132,14 @@ public class MyFrame extends JFrame {
                 boolean rowHeaderSelected = addRowHeaderCheckbox.isSelected();
                 boolean colHeaderSelected = addColHeaderCheckbox.isSelected();
 
-                // Клетка (0, 0) неизменяема только если оба чекбокса выбраны
-                if (row == 0 && column == 0 && rowHeaderSelected && colHeaderSelected) {
+                if (rowHeaderSelected && row == 0) {
                     return false;
                 }
 
-                if (row == 0) {
-                    if (rowHeaderSelected && column == 0) {
-                        return true;
-                    }
-                    return !rowHeaderSelected;
+                if (colHeaderSelected && column == 0) {
+                    return false;
                 }
-                if (column == 0) {
-                    if (colHeaderSelected && row == 0) {
-                        return true;
-                    }
-                    return !colHeaderSelected;
-                }
+
                 return true;
             }
         };
@@ -169,15 +160,49 @@ public class MyFrame extends JFrame {
     private void setSummaryCells(int numRows, int numCols) {
         // Пропускаем первую строку (заголовки столбцов), если выбран чекбокс
         if (addRowHeaderCheckbox.isSelected()) {
-            for (int i = 1; i < numCols; i++) {
-                table.setValueAt(String.valueOf(i), 0, i);
+
+            int startCol = 0;
+            int endCol = numCols;
+
+            if (addColHeaderCheckbox.isSelected()) {
+                startCol = 1;
+            }
+
+//            if (addColFooterCheckbox.isSelected()) {
+//                endCol = numCols - 1;
+//            }
+
+            for (int i = startCol; i < endCol; i++) {
+
+                int index = i;
+                if (addRowHeaderCheckbox.isSelected() && !addColHeaderCheckbox.isSelected()) {
+                    index++;
+                }
+
+                table.setValueAt(String.valueOf(index), 0, i);
+
             }
         }
 
         // Пропускаем первый столбец (заголовки строк), если выбран чекбокс
         if (addColHeaderCheckbox.isSelected()) {
-            for (int i = 1; i < numRows; i++) {
-                table.setValueAt(String.valueOf(i), i, 0);
+
+            int startRow = 0;
+            int endRow = numRows;
+
+            if (addRowHeaderCheckbox.isSelected()) {
+                startRow = 1;
+            }
+
+            for (int i = startRow; i < endRow; i++) {
+
+                int index = i;
+                if (addColHeaderCheckbox.isSelected() && !addRowHeaderCheckbox.isSelected()) {
+                    index++;
+                }
+
+                table.setValueAt(String.valueOf(index), i, 0);
+
             }
         }
     }

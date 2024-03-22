@@ -126,7 +126,23 @@ public class MyFrame extends JFrame {
             numCols++;
         }
 
-        DefaultTableModel tableModel = new MyTableModel(this);
+        DefaultTableModel tableModel = new DefaultTableModel(numRows, numCols) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                boolean rowHeaderSelected = addRowHeaderCheckbox.isSelected();
+                boolean colHeaderSelected = addColHeaderCheckbox.isSelected();
+
+                if (rowHeaderSelected && row == 0) {
+                    return false;
+                }
+
+                if (colHeaderSelected && column == 0) {
+                    return false;
+                }
+
+                return true;
+            }
+        };
 
         table = new JTable(tableModel);
         table.setTableHeader(null);
@@ -189,13 +205,6 @@ public class MyFrame extends JFrame {
 
             }
         }
-    }
-
-    public boolean isAddRowHeaderCheckbox(){
-        return addRowHeaderCheckbox.isSelected();
-    }
-    public boolean isAddColHeaderCheckbox(){
-        return addColHeaderCheckbox.isSelected();
     }
 
 }

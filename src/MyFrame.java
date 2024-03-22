@@ -207,4 +207,23 @@ public class MyFrame extends JFrame {
         }
     }
 
+    private Aggregator invokeAgg(String agg) {
+
+        switch (agg) {
+            case "Сумма":
+                return new SumAgg();
+            case "Количество":
+                return new CounterAgg();
+            case "Среднее":
+                return new AverageAgg();
+            case "Максимум":
+                return new MaxAgg();
+            case "Минимум":
+                return new MinAgg();
+            case "Сумма квадратов":
+                return new SqdSumAgg();
+        }
+
+        return null;
+    }
 }

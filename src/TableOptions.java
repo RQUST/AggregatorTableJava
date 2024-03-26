@@ -6,17 +6,6 @@ import java.awt.event.ItemEvent;
 
 public class TableOptions extends JPanel {
     private TableOptionsCallback callback;
-    private JSpinner rowSpinner;
-    private JSpinner colSpinner;
-    private JCheckBox addRowHeaderCheckbox;
-    private JCheckBox addColHeaderCheckbox;
-    private JCheckBox addSummaryRowCheckbox;
-    private JCheckBox addSummaryColumnCheckbox;
-    private JComboBox<String> summaryOptionsComboBoxRow;
-    private JComboBox<String> summaryOptionsComboBoxColumn;
-    private JButton insertButton;
-    private JButton cancelButton;
-
 
     // Конструктор класса
     public TableOptions() {
@@ -26,19 +15,19 @@ public class TableOptions extends JPanel {
         setVisible(true);
 
         JLabel rowLabel = new JLabel("Строк:");
-        rowSpinner = new JSpinner();
+        JSpinner rowSpinner = new JSpinner();
 
         JLabel colLabel = new JLabel("Столбцов:");
-        colSpinner = new JSpinner();
+        JSpinner colSpinner = new JSpinner();
 
-        addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовков");
+        JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовков");
         addRowHeaderCheckbox.setSelected(true);
 
-        addColHeaderCheckbox = new JCheckBox("Добавить столбец заголовков");
+        JCheckBox addColHeaderCheckbox = new JCheckBox("Добавить столбец заголовков");
         addColHeaderCheckbox.setSelected(true);
 
-        addSummaryRowCheckbox = new JCheckBox("Добавить строку итогов:");
-        summaryOptionsComboBoxRow = new JComboBox<>(new String[]{
+        JCheckBox addSummaryRowCheckbox = new JCheckBox("Добавить строку итогов:");
+        JComboBox summaryOptionsComboBoxRow = new JComboBox<>(new String[]{
                 "Сумма",
                 "Количество",
                 "Среднее",
@@ -48,8 +37,8 @@ public class TableOptions extends JPanel {
                 "Формула"
         });
 
-        addSummaryColumnCheckbox = new JCheckBox("Добавить столбец итогов:");
-        summaryOptionsComboBoxColumn = new JComboBox<>(new String[]{
+        JCheckBox addSummaryColumnCheckbox = new JCheckBox("Добавить столбец итогов:");
+        JComboBox summaryOptionsComboBoxColumn = new JComboBox<>(new String[]{
                 "Сумма",
                 "Количество",
                 "Среднее",

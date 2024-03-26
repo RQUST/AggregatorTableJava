@@ -20,7 +20,9 @@ public class StartApplication {
         TableOptions tableOptions = new TableOptions();
         tableOptions.setOptionsCallback(new TableOptions.TableOptionsCallback() {
             @Override
-            public void onButtonClicked(int rowData, int colData, int roundingData, boolean isTopHeader, boolean isLeftHeader, boolean isRightFooter, boolean isBottomFooter, boolean isRoundingCheck, String rightFooterData, String bottomFooterData) {
+            public void onButtonClicked(int rowData, int colData, int roundingData, boolean isTopHeader,
+                                        boolean isLeftHeader, boolean isRightFooter, boolean isBottomFooter,
+                                        boolean isRoundingCheck, String rightFooterData, String bottomFooterData) {
                 // Ваши действия по обработке нажатия кнопки в TableOptions
             }
         });

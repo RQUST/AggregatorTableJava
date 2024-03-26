@@ -2,6 +2,8 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 public class TableOptions extends JPanel {
@@ -20,6 +22,11 @@ public class TableOptions extends JPanel {
         JLabel colLabel = new JLabel("Столбцов:");
         JSpinner colSpinner = new JSpinner();
 
+        /*
+        rowSpinner.setValue(5);
+        colSpinner.setValue(4);
+        */
+
         JCheckBox addRowHeaderCheckbox = new JCheckBox("Добавить строку заголовков");
         addRowHeaderCheckbox.setSelected(true);
 
@@ -27,26 +34,29 @@ public class TableOptions extends JPanel {
         addColHeaderCheckbox.setSelected(true);
 
         JCheckBox addSummaryRowCheckbox = new JCheckBox("Добавить строку итогов:");
-        JComboBox summaryOptionsComboBoxRow = new JComboBox<>(new String[]{
-                "Сумма",
-                "Количество",
-                "Среднее",
-                "Максимум",
-                "Минимум",
-                "Сумма квадратов",
-                "Формула"
-        });
-
         JCheckBox addSummaryColumnCheckbox = new JCheckBox("Добавить столбец итогов:");
-        JComboBox summaryOptionsComboBoxColumn = new JComboBox<>(new String[]{
-                "Сумма",
-                "Количество",
-                "Среднее",
-                "Максимум",
-                "Минимум",
-                "Сумма квадратов",
-                "Формула"
-        });
+
+        JComboBox<Object> summaryOptionsComboBoxRow = new JComboBox<>();
+        JComboBox<Object> summaryOptionsComboBoxColumn = new JComboBox<>();
+
+        summaryOptionsComboBoxRow.setEnabled(false);
+        summaryOptionsComboBoxColumn.setEnabled(false);
+
+        DefaultComboBoxModel<Object> summaryOptionsRaw = new DefaultComboBoxModel<>();
+        summaryOptionsRaw.addElement("Сумма");
+        summaryOptionsRaw.addElement("Количество");
+        summaryOptionsRaw.addElement("Среднее");
+        summaryOptionsRaw.addElement("Максимум");
+        summaryOptionsRaw.addElement("Минимум");
+        summaryOptionsRaw.addElement("Сумма квадратов");
+
+        DefaultComboBoxModel<Object> summaryOptionsColumn = new DefaultComboBoxModel<>();
+        for (int i = 0; i < summaryOptionsRaw.getSize(); i++) {
+            summaryOptionsColumn.addElement(summaryOptionsRaw.getElementAt(i));
+        }
+
+        summaryOptionsComboBoxRow.setModel(summaryOptionsRaw);
+        summaryOptionsComboBoxColumn.setModel(summaryOptionsColumn);
 
         JButton insertButton = new JButton("Вставить");
         JButton cancelButton = new JButton("Отмена");
@@ -55,7 +65,7 @@ public class TableOptions extends JPanel {
 
     public interface TableOptionsCallback {
         void onButtonClicked(int rowData, int colData, int roundingData, boolean isTopHeader, boolean isLeftHeader,
-                             boolean isRightFooter, boolean isBottomFooter, boolean isRoundingCheck,
+                             boolean isSummaryRowCheckbox, boolean isaSummaryColumnCheckbox, boolean isRoundingCheck,
                              String rightFooterData, String bottomFooterData);
     }
 

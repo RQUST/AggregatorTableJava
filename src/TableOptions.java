@@ -59,11 +59,6 @@ public class TableOptions extends JPanel {
         roundingValue.setValue(2);
         roundingValue.setEnabled(false);
 
-        roundingCheck.addItemListener(e -> {
-            boolean isSelected = e.getStateChange() == ItemEvent.SELECTED;
-            roundingValue.setEnabled(isSelected);
-        });
-
         JButton insertButton = new JButton("Вставить");
         JButton cancelButton = new JButton("Отмена");
 
@@ -87,6 +82,21 @@ public class TableOptions extends JPanel {
 
         cancelButton.addActionListener(e -> closeWindow());
 
+        roundingCheck.addItemListener(e -> {
+            boolean isSelected = e.getStateChange() == ItemEvent.SELECTED;
+            roundingValue.setEnabled(isSelected);
+        });
+
+        addSummaryRowCheckbox.addItemListener(e -> {
+            boolean isSelected = e.getStateChange() == ItemEvent.SELECTED;
+            summaryOptionsComboBoxRow.setEnabled(isSelected);
+        });
+
+        addSummaryColumnCheckbox.addItemListener(e -> {
+            boolean isSelected = e.getStateChange() == ItemEvent.SELECTED;
+            summaryOptionsComboBoxColumn.setEnabled(isSelected);
+        });
+
         add(rowLabel);
         add(rowSpinner);
         add(colLabel);
@@ -105,7 +115,7 @@ public class TableOptions extends JPanel {
 
     public interface TableOptionsCallback {
         void onButtonClicked(int rowData, int colData, int roundingData, boolean isRowHeader, boolean isColHeader,
-                             boolean isRightFooter, boolean isBottomFooter, boolean isRoundingCheck,
+                             boolean isSummaryColumn, boolean isSummaryRow, boolean isRoundingCheck,
                              String rightFooterData, String bottomFooterData);
     }
 

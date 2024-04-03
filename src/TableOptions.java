@@ -57,6 +57,12 @@ public class TableOptions extends JPanel {
         summaryOptionsComboBoxRow.setModel(summaryOptionsRaw);
         summaryOptionsComboBoxColumn.setModel(summaryOptionsColumn);
 
+        JCheckBox roundingCheck = new JCheckBox("Округлять результат с точностью до ");
+        SpinnerModel roundingModel = new SpinnerNumberModel(0, 0, 100, 1);
+        JSpinner roundingValue = new JSpinner(roundingModel);
+        roundingValue.setValue(2);
+        roundingValue.setEnabled(false);
+
         JButton insertButton = new JButton("Вставить");
         JButton cancelButton = new JButton("Отмена");
 
@@ -64,12 +70,12 @@ public class TableOptions extends JPanel {
             if (callback != null) {
                 int rowData = (int) rowSpinner.getValue();
                 int colData = (int) colSpinner.getValue();
-                int roundingData = 0; // Установите значение, которое вам нужно
+                int roundingData = (int) roundingValue.getValue();
                 boolean isTopHeader = addRowHeaderCheckbox.isSelected();
                 boolean isLeftHeader = addColHeaderCheckbox.isSelected();
                 boolean isRightFooter = addSummaryColumnCheckbox.isSelected();
                 boolean isBottomFooter = addSummaryRowCheckbox.isSelected();
-                boolean isRoundingCheck = false; // Установите значение, которое вам нужно
+                boolean isRoundingCheck = false;
                 String rightFooterData = (String) summaryOptionsComboBoxRow.getSelectedItem();
                 String bottomFooterData = (String) summaryOptionsComboBoxColumn.getSelectedItem();
                 callback.onButtonClicked(rowData, colData, roundingData, isTopHeader, isLeftHeader,

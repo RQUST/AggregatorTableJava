@@ -2,16 +2,12 @@ import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 
 public class TableOptions extends JPanel {
     private TableOptionsCallback callback;
-    private JPanel table_panel_;
 
-    // Конструктор класса
-    public TableOptions(JPanel table_panel) {
-        table_panel_ = table_panel;
+    public TableOptions() {
         // Устанавливаем layout в конструкторе
         setLayout(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
         setSize(550, 300);
@@ -63,6 +59,11 @@ public class TableOptions extends JPanel {
         roundingValue.setValue(2);
         roundingValue.setEnabled(false);
 
+        roundingCheck.addItemListener(e -> {
+            boolean isSelected = e.getStateChange() == ItemEvent.SELECTED;
+            roundingValue.setEnabled(isSelected);
+        });
+
         JButton insertButton = new JButton("Вставить");
         JButton cancelButton = new JButton("Отмена");
 
@@ -71,15 +72,15 @@ public class TableOptions extends JPanel {
                 int rowData = (int) rowSpinner.getValue();
                 int colData = (int) colSpinner.getValue();
                 int roundingData = (int) roundingValue.getValue();
-                boolean isTopHeader = addRowHeaderCheckbox.isSelected();
-                boolean isLeftHeader = addColHeaderCheckbox.isSelected();
-                boolean isRightFooter = addSummaryColumnCheckbox.isSelected();
-                boolean isBottomFooter = addSummaryRowCheckbox.isSelected();
-                boolean isRoundingCheck = false;
-                String rightFooterData = (String) summaryOptionsComboBoxRow.getSelectedItem();
-                String bottomFooterData = (String) summaryOptionsComboBoxColumn.getSelectedItem();
-                callback.onButtonClicked(rowData, colData, roundingData, isTopHeader, isLeftHeader,
-                        isRightFooter, isBottomFooter, isRoundingCheck, rightFooterData, bottomFooterData);
+                boolean isRowHeader = addRowHeaderCheckbox.isSelected();
+                boolean isColHeader = addColHeaderCheckbox.isSelected();
+                boolean isSummaryColumn = addSummaryColumnCheckbox.isSelected();
+                boolean isSummaryRow = addSummaryRowCheckbox.isSelected();
+                boolean isRoundingCheck = roundingCheck.isSelected();
+                String FooterRow = (String) summaryOptionsComboBoxRow.getSelectedItem();
+                String FooterColumn = (String) summaryOptionsComboBoxColumn.getSelectedItem();
+                callback.onButtonClicked(rowData, colData, roundingData, isRowHeader, isColHeader,
+                        isSummaryColumn, isSummaryRow, isRoundingCheck, FooterRow, FooterColumn);
                 closeWindow();
             }
         });
@@ -96,12 +97,14 @@ public class TableOptions extends JPanel {
         add(summaryOptionsComboBoxRow);
         add(addSummaryColumnCheckbox);
         add(summaryOptionsComboBoxColumn);
+        add(roundingCheck);
+        add(roundingValue);
         add(insertButton);
         add(cancelButton);
     }
 
     public interface TableOptionsCallback {
-        void onButtonClicked(int rowData, int colData, int roundingData, boolean isTopHeader, boolean isLeftHeader,
+        void onButtonClicked(int rowData, int colData, int roundingData, boolean isRowHeader, boolean isColHeader,
                              boolean isRightFooter, boolean isBottomFooter, boolean isRoundingCheck,
                              String rightFooterData, String bottomFooterData);
     }

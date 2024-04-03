@@ -1,5 +1,4 @@
 import net.miginfocom.swing.MigLayout;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +7,6 @@ public class StartApplication {
     public static void StartApp(String[] args) {
         SwingUtilities.invokeLater(StartApplication::createAndShowGUI);
     }
-
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Мое приложение");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,7 +16,7 @@ public class StartApplication {
 
         JTable table = new JTable();
         JPanel table_panel = new JPanel(new MigLayout("align center, wrap"));
-        table_panel.add(table);
+        table_panel.add(new JScrollPane(table)); // Добавляем JScrollPane для JTable
 
         panel.add(messageLabel, "span, grow");
         panel.add(table_panel);
@@ -30,7 +28,7 @@ public class StartApplication {
         JMenuItem startMenuItem = new JMenuItem("Старт");
 
         startMenuItem.addActionListener(e -> {
-            TableOptions myFrame = new TableOptions(table_panel);
+            TableOptions myFrame = new TableOptions();
         });
 
         fileMenu.add(startMenuItem);

@@ -72,10 +72,10 @@ public class TableOptions extends JPanel {
                 boolean isSummaryColumn = addSummaryColumnCheckbox.isSelected();
                 boolean isSummaryRow = addSummaryRowCheckbox.isSelected();
                 boolean isRoundingCheck = roundingCheck.isSelected();
-                String FooterRow = (String) summaryOptionsComboBoxRow.getSelectedItem();
-                String FooterColumn = (String) summaryOptionsComboBoxColumn.getSelectedItem();
+                String footerRow = (String) summaryOptionsComboBoxRow.getSelectedItem();
+                String footerColumn = (String) summaryOptionsComboBoxColumn.getSelectedItem();
                 callback.onButtonClicked(rowData, colData, roundingData, isRowHeader, isColHeader,
-                        isSummaryColumn, isSummaryRow, isRoundingCheck, FooterRow, FooterColumn);
+                        isSummaryColumn, isSummaryRow, isRoundingCheck, footerRow, footerColumn);
                 closeWindow();
             }
         });
@@ -116,7 +116,7 @@ public class TableOptions extends JPanel {
     public interface TableOptionsCallback {
         void onButtonClicked(int rowData, int colData, int roundingData, boolean isRowHeader, boolean isColHeader,
                              boolean isSummaryColumn, boolean isSummaryRow, boolean isRoundingCheck,
-                             String rightFooterData, String bottomFooterData);
+                             String footerRow, String footerColumn);
     }
 
     public void setOptionsCallback(TableOptionsCallback callback) {

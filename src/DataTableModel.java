@@ -26,8 +26,8 @@ public class DataTableModel extends AbstractTableModel {
     private double[] colResult;
 
     public DataTableModel(int rowData, int colData, int roundingData, boolean isRowHeader, boolean isColHeader,
-                      boolean isSummaryColumn, boolean isSummaryRow, boolean isRoundingCheck,
-                      String footerRow, String footerColumn) {
+                          boolean isSummaryColumn, boolean isSummaryRow, boolean isRoundingCheck,
+                          String footerRow, String footerColumn) {
         this.rowData = rowData;
         this.colData = colData;
         this.roundingData = roundingData;

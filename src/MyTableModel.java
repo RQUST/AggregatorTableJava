@@ -6,27 +6,36 @@ public class MyTableModel extends AbstractTableModel {
     private final boolean[] rowEditable;
     private final boolean[] columnEditable;
 
+    private final Aggregator rowAggregator;
+    private final Aggregator colAggregator;
+
+    private static final int DEFAULT_ROW_DATA = 0;
+    private static final int DEFAULT_COL_DATA = 0;
+    private static final int DEFAULT_ROUNDING_DATA = 0;
+
+    // Константы для агрегаторов
+    private static final String SUM = "Сумма";
+    private static final String COUNT = "Количество";
+    // Остальные константы...
+
     private int rowData;
     private int colData;
-    public int roundingData;
-    private final boolean isTopHeader;
-    private final boolean isLeftHeader;
-    private final boolean isRightFooter;
-    private final boolean isBottomFooter;
-    public boolean isRoundingCheck;
-    private final String rightFooterData;
-    private final String bottomFooterData;
+    private int roundingData;
+    private boolean isTopHeader;
+    private boolean isLeftHeader;
+    private boolean isRightFooter;
+    private boolean isBottomFooter;
+    private boolean isRoundingCheck;
+    private String rightFooterData;
+    private String bottomFooterData;
     private int tableStartCol = 0;
     private int tableStartRow = 0;
     private int tableEndCol;
     private int tableEndRow;
-    private final Aggregator rowAggregator;
-    private final Aggregator colAggregator;
-    private final double[] rowResult;
-    private final double[] colResult;
+    private double[] rowResult;
+    private double[] colResult;
 
-    public MyTableModel(int rd, int cd, int rod, boolean ith, boolean ilh,
-                        boolean irf, boolean ibf, boolean irc,
+    public MyTableModel(int rd, int cd, int rod, boolean ith, boolean ilh, boolean irf, boolean ibf, boolean irc,
                         String rfd, String bfd) {
 
         rowData = rd;
@@ -175,7 +184,6 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     private double setColValInAgg(int columnIndex) {
-
         colAggregator.reset();
 
         for (int rowIndex = tableStartRow; rowIndex < rowData - 1; rowIndex++) {
@@ -186,11 +194,9 @@ public class MyTableModel extends AbstractTableModel {
         }
 
         return colAggregator.getResult();
-
     }
 
     private double setRowValInAgg(int rowIndex) {
-
         rowAggregator.reset();
 
         for (int colIndex = tableStartCol; colIndex < colData - 1; colIndex++) {
@@ -199,9 +205,7 @@ public class MyTableModel extends AbstractTableModel {
                 rowAggregator.addValue(objToDbl(col));
             }
         }
-
         return rowAggregator.getResult();
-
     }
 
     private void updateFooters() {

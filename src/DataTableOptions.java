@@ -167,7 +167,7 @@ public class DataTableOptions extends JPanel {
     }
 
     // Интерфейс OptionsCallback определяет метод, который будет вызываться при нажатии кнопки "Вставить".
-// Метод onInsertButtonClicked принимает параметры, содержащие данные о текущих параметрах интерфейса.
+    // Метод onInsertButtonClicked принимает параметры, содержащие данные о текущих параметрах интерфейса.
     public interface OptionsCallback {
         void onInsertButtonClicked(int rowData, int colData, int roundingData, boolean isTopHeader, boolean isLeftHeader,
                                    boolean isRightFooter, boolean isBottomFooter, boolean isRoundingCheck,

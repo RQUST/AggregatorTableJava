@@ -135,7 +135,7 @@ class MinAgg implements Aggregator {
 }
 
 // Сумма квадратов
-class SqdSumAgg implements Aggregator {
+class SquaredSumAgg implements Aggregator {
 
     private double sqdSum = 0;
     private double tmp;

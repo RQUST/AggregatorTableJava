@@ -177,7 +177,7 @@ public class MyTableModel extends AbstractTableModel {
             case "Минимум":
                 return new MinAgg();
             case "Сумма квадратов":
-                return new SquaredSumAgg;
+                return new SquaredSumAgg();
         }
 
         return null;

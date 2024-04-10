@@ -140,7 +140,7 @@ public class DataTableOptions extends JPanel {
         });
 
         add(rowLable);
-        add(rowValue, "growx");
+        add(rowValue,  "width 220!");
         add(colLable);
         add(colValue, "growx");
 
@@ -148,10 +148,12 @@ public class DataTableOptions extends JPanel {
         add(leftHeader, "span 2");
 
         add(bottomFooter, "span 2");
-        add(bottomFooterCombo, "span 2, growx");
+        add(bottomFooterCombo, "growx");
+        add(new JTextField(), "grow");
 
         add(rightFooter, "span 2");
-        add(rightFooterCombo, "span 2, growx");
+        add(rightFooterCombo, "growx");
+        add(new JTextField(), "grow");
 
         JPanel roundingPanel = new JPanel(new MigLayout("insets 0 0 0 0, wrap 3", "[pref!][60][pref!]", ""));
         roundingPanel.add(roundingCheck);

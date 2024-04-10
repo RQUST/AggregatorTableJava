@@ -136,33 +136,53 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public void updateTableHeadersAndFooters() {
+        // Обновление верхнего заголовка таблицы
         if (isTopHeader) {
             int n = 1;
+            // Проход по каждому столбцу, начиная с tableStartCol и заканчивая colData - 1
             for (int i = tableStartCol; i < colData; i++) {
+                // Установка последовательного номера в первой строке каждого столбца
                 data[0][i] = n;
                 n++;
             }
+            // Первая строка становится нередактируемой
             setRowEditable(0, false);
         }
+
+        // Обновление левого заголовка таблицы
         if (isLeftHeader) {
             int n = 1;
+            // Проход по каждой строке, начиная с tableStartRow и заканчивая rowData - 1
             for (int i = tableStartRow; i < rowData; i++) {
+                // Установка последовательного номера в первом столбце каждой строки
                 data[i][0] = n;
                 n++;
             }
+            // Первый столбец становится нередактируемым
             setColumnEditable(0, false);
         }
+
+        // Обновление нижнего подвала таблицы
         if (isBottomFooter) {
+            // Установка пустой строки в последней строке первого столбца
             data[rowData - 1][0] = "";
+            // Если также установлен левый заголовок, устанавливается значение bottomFooterData
             if (isLeftHeader) data[rowData - 1][0] = bottomFooterData;
+            // Последняя строка становится нередактируемой
             setRowEditable(rowData - 1, false);
         }
+
+        // Обновление правого подвала таблицы
         if (isRightFooter) {
+            // Установка пустой строки в последнем столбце первой строки
             data[0][colData - 1] = "";
+            // Если также установлен верхний заголовок, устанавливается значение rightFooterData
             if (isTopHeader) data[0][colData - 1] = rightFooterData;
+            // Последний столбец становится нередактируемым
             setColumnEditable(colData - 1, false);
         }
     }
+
 
     private Aggregator invokeAgg(String agg) {
         switch (agg) {
@@ -183,14 +203,19 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     private double setColValInAgg(int columnIndex) {
+        // Сброс агрегатора перед началом агрегации новых значений
         colAggregator.reset();
 
+        // Проход по строкам таблицы, начиная с tableStartRow и заканчивая rowData - 1
         for (int rowIndex = tableStartRow; rowIndex < rowData - 1; rowIndex++) {
             Object[] row = data[rowIndex];
+            // Проверка, что columnIndex не выходит за пределы длины текущей строки и что значение не равно null
             if (columnIndex < row.length && row[columnIndex] != null) {
+                // Преобразование значения в double и добавление его в агрегатор
                 colAggregator.addValue(objectToDouble(row[columnIndex]));
             }
         }
+        // Возвращение результата агрегации для указанного столбца
         return colAggregator.getResult();
     }
 
@@ -207,33 +232,40 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     private void updateFooters() {
-
+        // Обновление нижнего подвала таблицы, если флаг isBottomFooter установлен
         if (isBottomFooter) {
+            // Вычисление агрегированных значений для каждого столбца и сохранение результатов в массив rowResult
             for (int i = 0; i < rowResult.length; i++) {
                 try {
                     rowResult[i] = setColValInAgg(i);
                 } catch (Exception ignored) {
                 }
             }
+            // Применение округления к каждому элементу массива rowResult и сохранение результата в последнюю строку таблицы
             for (int i = tableStartCol; i < tableEndCol; i++) {
                 data[tableEndRow - 1][i] = applyRounding(rowResult[i]);
             }
         }
 
+        // Обновление правого подвала таблицы, если флаг isRightFooter установлен
         if (isRightFooter) {
+            // Вычисление агрегированных значений для каждой строки и сохранение результатов в массив colResult
             for (int i = 0; i < colResult.length; i++) {
                 try {
                     colResult[i] = setRowValInAgg(i);
                 } catch (Exception ignored) {
                 }
             }
+            // Применение округления к каждому элементу массива colResult и сохранение результата в последний столбец таблицы
             for (int i = tableStartRow; i < tableEndRow; i++) {
                 data[i][tableEndCol - 1] = applyRounding(colResult[i]);
             }
-
         }
+
+        // Установка пустой строки в нижний правый угол таблицы
         data[tableEndRow - 1][tableEndCol - 1] = " ";
     }
+
 
     private double objectToDouble(Object obj) {
         if (obj == null) {

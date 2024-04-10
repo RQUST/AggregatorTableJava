@@ -48,7 +48,7 @@ public class DataTableOptions extends JPanel {
         // setLayout(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
         // setLayout(new MigLayout("insets 1 1 1 1, wrap 4, fill", "[grow][250!,fill][grow][200!,fill]"));
 
-        setPreferredSize(new Dimension(640, 340));
+        setPreferredSize(new Dimension(640, 300));
 
         JLabel rowLable = new JLabel("Строк: ");
         JLabel colLable = new JLabel("Столбцов: ");

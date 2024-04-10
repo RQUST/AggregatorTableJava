@@ -2,6 +2,10 @@ import javax.swing.table.AbstractTableModel;
 import java.util.Arrays;
 
 public class MyTableModel extends AbstractTableModel {
+    /*
+     * Ключевое слово final в Java применяется к переменным, полям класса, параметрам методов и классам. Оно указывает на то,
+     * что значение или состояние этого элемента не может быть изменено после его инициализации или присвоения.*/
+
     private final Object[][] data;
     private final boolean[] rowEditable;
     private final boolean[] columnEditable;
@@ -9,15 +13,14 @@ public class MyTableModel extends AbstractTableModel {
     private final Aggregator rowAggregator;
     private final Aggregator colAggregator;
 
-    private static final int DEFAULT_ROW_DATA = 0;
-    private static final int DEFAULT_COL_DATA = 0;
-    private static final int DEFAULT_ROUNDING_DATA = 0;
+    /*
+    Java ключевое слово static применяется к переменным и методам класса. Когда поле класса (переменная) объявлено как static,
+    это означает, что данное поле принадлежит самому классу, а не каждому отдельному экземпляру этого класса. Это также означает,
+    что значение этой переменной общее для всех экземпляров класса.*/
 
-    // Константы для агрегаторов
+    /// Константы для агрегаторов
     private static final String SUM = "Сумма";
     private static final String COUNT = "Количество";
-    // Остальные константы...
-
     private int rowData;
     private int colData;
     private int roundingData;
@@ -89,13 +92,11 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
-
         data[rowIndex][columnIndex] = value;
 
         updateFooters();
 
         fireTableDataChanged();
-
     }
 
     @Override
@@ -164,7 +165,6 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     private Aggregator invokeAgg(String agg) {
-
         switch (agg) {
             case "Сумма":
                 return new SumAgg();
@@ -179,7 +179,6 @@ public class MyTableModel extends AbstractTableModel {
             case "Сумма квадратов":
                 return new SquaredSumAgg();
         }
-
         return null;
     }
 
@@ -192,7 +191,6 @@ public class MyTableModel extends AbstractTableModel {
                 colAggregator.addValue(objToDbl(row[columnIndex]));
             }
         }
-
         return colAggregator.getResult();
     }
 
@@ -211,7 +209,6 @@ public class MyTableModel extends AbstractTableModel {
     private void updateFooters() {
 
         if (isBottomFooter) {
-
             for (int i = 0; i < rowResult.length; i++) {
                 try {
                     rowResult[i] = setColValInAgg(i);
@@ -221,11 +218,9 @@ public class MyTableModel extends AbstractTableModel {
             for (int i = tableStartCol; i < tableEndCol; i++) {
                 data[tableEndRow - 1][i] = applyRounding(rowResult[i]);
             }
-
         }
 
         if (isRightFooter) {
-
             for (int i = 0; i < colResult.length; i++) {
                 try {
                     colResult[i] = setRowValInAgg(i);
@@ -237,13 +232,10 @@ public class MyTableModel extends AbstractTableModel {
             }
 
         }
-
         data[tableEndRow - 1][tableEndCol - 1] = " ";
-
     }
 
     private double objToDbl(Object obj) {
-
         if (obj == null) {
             return 0.0;
         }

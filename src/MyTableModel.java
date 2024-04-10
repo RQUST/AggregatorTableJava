@@ -70,7 +70,7 @@ public class MyTableModel extends AbstractTableModel {
         Arrays.fill(rowEditable, true);
         Arrays.fill(columnEditable, true);
 
-        updateHeaderText();
+        updateTableHeadersAndFooters();
     }
 
     @Override
@@ -135,7 +135,7 @@ public class MyTableModel extends AbstractTableModel {
         }
     }
 
-    public void updateHeaderText() {
+    public void updateTableHeadersAndFooters() {
         if (isTopHeader) {
             int n = 1;
             for (int i = tableStartCol; i < colData; i++) {
@@ -188,7 +188,7 @@ public class MyTableModel extends AbstractTableModel {
         for (int rowIndex = tableStartRow; rowIndex < rowData - 1; rowIndex++) {
             Object[] row = data[rowIndex];
             if (columnIndex < row.length && row[columnIndex] != null) {
-                colAggregator.addValue(objToDbl(row[columnIndex]));
+                colAggregator.addValue(objectToDouble(row[columnIndex]));
             }
         }
         return colAggregator.getResult();
@@ -200,7 +200,7 @@ public class MyTableModel extends AbstractTableModel {
         for (int colIndex = tableStartCol; colIndex < colData - 1; colIndex++) {
             Object col = data[rowIndex][colIndex];
             if (col != null) {
-                rowAggregator.addValue(objToDbl(col));
+                rowAggregator.addValue(objectToDouble(col));
             }
         }
         return rowAggregator.getResult();
@@ -235,7 +235,7 @@ public class MyTableModel extends AbstractTableModel {
         data[tableEndRow - 1][tableEndCol - 1] = " ";
     }
 
-    private double objToDbl(Object obj) {
+    private double objectToDouble(Object obj) {
         if (obj == null) {
             return 0.0;
         }

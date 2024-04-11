@@ -44,11 +44,9 @@ public class DataTableOptions extends JPanel {
          * Второй столбец будет иметь фиксированную ширину в 230 пикселей.
          * Третий столбец будет иметь нулевую ширину, что означает, что он будет занимать оставшееся пространство после первых двух столбцов.
          * Четвертый столбец будет заполнять оставшееся пространство в строке.*/
-        setLayout(new MigLayout("insets 1 1 1 1, wrap 4, fill", "[][][][]", ""));
-        // setLayout(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
-        // setLayout(new MigLayout("insets 1 1 1 1, wrap 4, fill", "[grow][250!,fill][grow][200!,fill]"));
+        setLayout(new MigLayout("insets 1 1 1 1, wrap 4, fill", "[][][][]"));
 
-        setPreferredSize(new Dimension(550, 300));
+        setPreferredSize(new Dimension(600, 300));
 
         JLabel rowLable = new JLabel("Строк: ");
         JLabel colLable = new JLabel("Столбцов: ");

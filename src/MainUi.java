@@ -42,7 +42,7 @@ public class MainUi extends JFrame implements DataTableOptions.OptionsCallback {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Установка шрифта по умолчанию для всего приложения
-        setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 18));
+        // setUIFont(new javax.swing.plaf.FontUIResource("Arial", Font.PLAIN, 18));
 
         // Создание и настройка менюбара
         JMenuBar menuBar = new JMenuBar();
@@ -168,6 +168,7 @@ public class MainUi extends JFrame implements DataTableOptions.OptionsCallback {
         tablePanel.repaint();
     }
 
+    /*
     /// Метод для установки шрифта по умолчанию для всего приложения
     // javax.swing.plaf.FontUIResource f - это объект шрифта, который будет установлен в качестве шрифта по умолчанию для компонентов Swing.
     public static void setUIFont(javax.swing.plaf.FontUIResource f) {
@@ -181,5 +182,5 @@ public class MainUi extends JFrame implements DataTableOptions.OptionsCallback {
                 UIManager.put(key, f);
             }
         }
-    }
+    }*/
 }

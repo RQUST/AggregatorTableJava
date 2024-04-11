@@ -44,11 +44,11 @@ public class DataTableOptions extends JPanel {
          * Второй столбец будет иметь фиксированную ширину в 230 пикселей.
          * Третий столбец будет иметь нулевую ширину, что означает, что он будет занимать оставшееся пространство после первых двух столбцов.
          * Четвертый столбец будет заполнять оставшееся пространство в строке.*/
-        setLayout(new MigLayout("insets 8 8 4 8, wrap 4, fill", "[pref!][230!]0[pref!][fill]", ""));
+        setLayout(new MigLayout("insets 1 1 1 1, wrap 4, fill", "[][][][]", ""));
         // setLayout(new MigLayout("insets 1 1 1 1, wrap 1, fill", "[]"));
         // setLayout(new MigLayout("insets 1 1 1 1, wrap 4, fill", "[grow][250!,fill][grow][200!,fill]"));
 
-        setPreferredSize(new Dimension(640, 300));
+        setPreferredSize(new Dimension(550, 300));
 
         JLabel rowLable = new JLabel("Строк: ");
         JLabel colLable = new JLabel("Столбцов: ");
@@ -140,9 +140,9 @@ public class DataTableOptions extends JPanel {
         });
 
         add(rowLable);
-        add(rowValue,  "width 220!");
+        add(rowValue,  "width 200!");
         add(colLable);
-        add(colValue, "growx");
+        add(colValue, "width 200!");
 
         add(topHeader, "span 2");
         add(leftHeader, "span 2");
@@ -155,7 +155,8 @@ public class DataTableOptions extends JPanel {
         add(rightFooterCombo, "growx");
         add(new JTextField(), "grow");
 
-        JPanel roundingPanel = new JPanel(new MigLayout("insets 0 0 0 0, wrap 3", "[pref!][60][pref!]", ""));
+        JPanel roundingPanel =new JPanel(new MigLayout("insets 5 5 5 5, wrap 2", "[][]"));
+
         roundingPanel.add(roundingCheck);
         roundingPanel.add(roundingValue);
         roundingPanel.add(roundingText);

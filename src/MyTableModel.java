@@ -198,6 +198,8 @@ public class MyTableModel extends AbstractTableModel {
                 return new MinAgg();
             case "Сумма квадратов":
                 return new SquaredSumAgg();
+            case "СКО":
+                return new StandardDeviationAgg(); // добавляем агрегатор для стандартного отклонения
         }
         return null;
     }

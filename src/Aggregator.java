@@ -1,3 +1,5 @@
+import java.util.List;
+
 public interface Aggregator {
     void addValue(double value);
 
@@ -159,4 +161,34 @@ class SquaredSumAgg implements Aggregator {
         tmp = 0d;
     }
 
+}
+
+class StandardDeviationAgg implements Aggregator {
+
+    private double sum = 0;
+    private double sumSquared = 0;
+    private int count = 0;
+
+    @Override
+    public void addValue(double value) {
+        sum += value;
+        sumSquared += value * value;
+        count++;
+    }
+
+    @Override
+    public double getResult() {
+        if (count < 2) {
+            return 0; // Стандартное отклонение определено только для более чем одного значения
+        }
+        double variance = (sumSquared - (sum * sum) / count) / (count - 1);
+        return Math.sqrt(variance);
+    }
+
+    @Override
+    public void reset() {
+        sum = 0;
+        sumSquared = 0;
+        count = 0;
+    }
 }

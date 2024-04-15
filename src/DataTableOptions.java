@@ -59,6 +59,7 @@ public class DataTableOptions extends JPanel {
         footerModel.addElement("Максимум");
         footerModel.addElement("Минимум");
         footerModel.addElement("Сумма квадратов");
+        footerModel.addElement("СКО");
 
         DefaultComboBoxModel<Object> footerModel_2 = new DefaultComboBoxModel<>();
         for (int i = 0; i < footerModel.getSize(); i++) {
